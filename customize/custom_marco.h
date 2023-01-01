@@ -9,4 +9,31 @@ Customize::Customize()
 }
 
 
-void Customize::custom_idle_behavior() {};
+void Customize::custom_idle_behavior() {
+    //implemented pump runs intermittently during idling
+    
+    static bool pumptimer_switch = false;
+    static int pumptimer = 0;
+    if (pumptimer==0) {
+        pumptimer = 45;
+        pumptimer_switch = true;
+    } else if(pumptimer<15) {
+        if (!pumptimer_switch) {
+            ESP_LOGD("pumptimer", "pump on for 5 minutes to circulate water");
+            pumptimer_switch = true;
+            id(modbus_enable_heat).turn_on();
+        }
+        //ESP_LOGD("pumptimer", "pump on");
+        //id(modbus_enable_heat).turn_on();
+        pumptimer--;
+    } else {
+        if(pumptimer_switch) {
+            pumptimer_switch=false;
+            ESP_LOGD("pumptimer", "pump off for 10 minutes to save energy");
+            id(modbus_enable_heat).turn_off();
+        }
+        //ESP_LOGD("pumptimer", "pump off");
+        //id(modbus_enable_heat).turn_off();
+        pumptimer--;
+    }
+}
