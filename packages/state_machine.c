@@ -12,7 +12,8 @@
 
             timer += dt;
             if (timer < 60) { // we just got booted, let's take some time to figure out what's happening before taking action
-              if (id(compressor_running).state) {
+            //added temporary hack to stay out of "running" if I want to run manual cooling mode
+              if (id(compressor_running).state && id(cooling_switch_number).state==0) {
                 newstate = state = Running;
               } else {
                 if (id(water_temp_target_output).state > 20) // turn on if stooklijn asks more then absolute water minimum
