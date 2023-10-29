@@ -15,11 +15,16 @@ packages:
   generic: !include packages/generic.yaml
 
 sensor:
-#fake the Huiskamer_xxx sensors to make the rest of the code as generic as possible:)
+# include temp cooling sensor to turn off idle behavior
+  - platform: homeassistant
+    name: "cooling_switch_number"
+    id: cooling_switch_number
+    entity_id: input_number.cooling_switch_number
+  #fake the Huiskamer_xxx sensors to make the rest of the code as generic as possible:)
   - platform: homeassistant
     name: "Huiskamer lucht"
     id: huiskamer_lucht
-    entity_id: sensor.th_woonkamer_temperature
+    entity_id: sensor.th_woonkamer_z2m_temperature
     on_value:
       then: 
         script.execute: thermostaat
