@@ -1,7 +1,7 @@
 substitutions:
   customize: marco
   device_name: esp-lgthermav
-  thermostat_step_size: "0.5"
+  thermostat_step_size: "0.1"
   thermostat_initial_value: "20.5"
   max_wtemp_custom: "40.0"
   GPIO_modbus_powermeter_tx: "GPIO23"
